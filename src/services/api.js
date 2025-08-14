@@ -1,22 +1,31 @@
 import axios from 'axios';
+import config from '../config/environment';
 
-// Create axios instance with default configuration
+// Create axios instance with automatic environment detection
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
-  timeout: 10000,
+  baseURL: config.apiUrl,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
+// Log the current configuration for debugging
+console.log('🌐 API Configuration:', {
+  environment: config.environment,
+  apiUrl: config.apiUrl,
+  isLocal: config.isLocal,
+  isProduction: config.isProduction
+});
+
 // Request interceptor to add auth token
 api.interceptors.request.use(
-  (config) => {
+  (requestConfig) => {
     const token = localStorage.getItem('jobTrackerToken');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      requestConfig.headers.Authorization = `Bearer ${token}`;
     }
-    return config;
+    return requestConfig;
   },
   (error) => {
     return Promise.reject(error);
@@ -35,11 +44,12 @@ api.interceptors.response.use(
       error.userMessage = 'Too many requests. Please wait a moment and try again.';
     }
     
-    // Handle 401 (Unauthorized)
+    // Handle 401 (Unauthorized) - don't redirect automatically
+    // Let the component handle this gracefully
     if (response?.status === 401) {
-      localStorage.removeItem('jobTrackerToken');
-      localStorage.removeItem('jobTrackerUser');
-      window.location.href = '/login';
+      console.warn('⚠️ Unauthorized (401). Token may be expired or invalid.');
+      // Don't redirect automatically - let the component decide what to do
+      // The component can check if the user is still authenticated and handle accordingly
     }
     
     // Handle 503 (Service Unavailable)

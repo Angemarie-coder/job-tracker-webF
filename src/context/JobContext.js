@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect, useState, useCallback } from 'react';
 import { jobService } from '../services/jobService';
+import { useAuth } from './AuthContext';
 
 const JobContext = createContext();
 
@@ -49,37 +50,96 @@ const jobReducer = (state, action) => {
 export const JobProvider = ({ children }) => {
   const [state, dispatch] = useReducer(jobReducer, initialState);
   const [lastRefreshTime, setLastRefreshTime] = useState(0);
+  const [isInitialFetchComplete, setIsInitialFetchComplete] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [isFetching, setIsFetching] = useState(false);
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
-  // Load jobs from API on mount
+  // Load jobs from API only when authenticated
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        console.log('🔍 Initial fetch of jobs and stats...');
-        dispatch({ type: 'SET_LOADING', payload: true });
-        
-        const data = await jobService.getJobs();
-        console.log('🔍 Jobs data received:', data);
-        console.log('🔍 Jobs array:', data.data?.jobs);
-        console.log('🔍 Jobs data structure:', JSON.stringify(data, null, 2));
-        dispatch({ type: 'SET_JOBS', payload: data.data?.jobs || [] });
-        
-        // Also fetch stats
-        const statsData = await jobService.getJobStats();
-        console.log('🔍 Stats data received:', statsData);
-        console.log('🔍 Stats data structure:', JSON.stringify(statsData, null, 2));
-        dispatch({ type: 'SET_STATS', payload: statsData });
-        
-        console.log('🔍 Initial fetch completed');
-      } catch (error) {
-        console.error('❌ Error loading jobs:', error);
-        dispatch({ type: 'SET_ERROR', payload: error.message });
-      } finally {
-        dispatch({ type: 'SET_LOADING', payload: false });
-      }
-    };
+    console.log('🔍 JobContext useEffect triggered - auth loading:', authLoading, 'authenticated:', isAuthenticated, 'initial fetch complete:', isInitialFetchComplete);
+    
+    // Don't fetch jobs if still checking authentication or not authenticated
+    if (authLoading || !isAuthenticated) {
+      console.log('🔍 Skipping job fetch - auth loading:', authLoading, 'authenticated:', isAuthenticated);
+      return;
+    }
 
-    fetchJobs();
-  }, []);
+    // Don't fetch if we've already completed the initial fetch
+    if (isInitialFetchComplete) {
+      console.log('🔍 Initial fetch already completed, skipping...');
+      return;
+    }
+
+    // Add a small delay to ensure auth is fully settled
+    const timer = setTimeout(() => {
+      console.log('🔍 Starting delayed job fetch...');
+      
+      // Check if already fetching
+      if (isFetching) {
+        console.log('🔍 Already fetching, skipping...');
+        return;
+      }
+      
+      const fetchJobs = async () => {
+        try {
+          console.log('🔍 Initial fetch of jobs and stats...');
+          setIsFetching(true);
+          dispatch({ type: 'SET_LOADING', payload: true });
+          
+          const data = await jobService.getJobs();
+          console.log('🔍 Jobs data received:', data);
+          console.log('🔍 Jobs array:', data.data?.jobs);
+          console.log('🔍 Jobs data structure:', JSON.stringify(data, null, 2));
+          dispatch({ type: 'SET_JOBS', payload: data.data?.jobs || [] });
+          
+          // Also fetch stats
+          const statsData = await jobService.getJobStats();
+          console.log('🔍 Stats data received:', statsData);
+          console.log('🔍 Stats data structure:', JSON.stringify(statsData, null, 2));
+          dispatch({ type: 'SET_STATS', payload: statsData });
+          
+          console.log('🔍 Initial fetch completed');
+          setIsInitialFetchComplete(true);
+        } catch (error) {
+          console.error('❌ Error loading jobs:', error);
+          
+          // Handle 401 errors gracefully - don't set error state that might trigger retries
+          if (error.response?.status === 401) {
+            console.warn('⚠️ Unauthorized - user may need to re-authenticate');
+            // Don't set error state for auth issues to prevent infinite loops
+            dispatch({ type: 'SET_JOBS', payload: [] });
+            dispatch({ type: 'SET_STATS', payload: null });
+            setIsInitialFetchComplete(true); // Mark as complete even on error to prevent retries
+          } else {
+            // Increment retry count for non-auth errors
+            const newRetryCount = retryCount + 1;
+            setRetryCount(newRetryCount);
+            
+            if (newRetryCount >= 3) {
+              console.warn('⚠️ Max retries reached, stopping attempts');
+              dispatch({ type: 'SET_ERROR', payload: 'Failed to load jobs after multiple attempts. Please refresh the page.' });
+              setIsInitialFetchComplete(true);
+            } else {
+              console.log(`🔍 Retry attempt ${newRetryCount}/3`);
+              // Don't mark as complete, allow retry
+              return;
+            }
+          }
+        } finally {
+          dispatch({ type: 'SET_LOADING', payload: false });
+          setIsFetching(false);
+        }
+      };
+
+      fetchJobs();
+    }, 100); // Small delay to ensure auth state is stable
+
+    return () => {
+      console.log('🔍 Cleaning up JobContext useEffect timer');
+      clearTimeout(timer);
+    };
+  }, [isAuthenticated, authLoading, isInitialFetchComplete, isFetching, retryCount]);
 
   const addJob = async (jobData) => {
     try {
@@ -202,6 +262,12 @@ export const JobProvider = ({ children }) => {
   };
 
   const refreshJobs = async () => {
+    // Don't refresh if not authenticated
+    if (!isAuthenticated) {
+      console.log('🔍 Skipping refresh - user not authenticated');
+      return;
+    }
+
     try {
       // Prevent multiple simultaneous refresh calls
       if (state.loading) {
@@ -231,7 +297,15 @@ export const JobProvider = ({ children }) => {
       console.log('🔍 Refresh completed');
     } catch (error) {
       console.error('❌ Error refreshing data:', error);
-      dispatch({ type: 'SET_ERROR', payload: error.message });
+      
+      // Handle 401 errors gracefully - don't set error state that might trigger retries
+      if (error.response?.status === 401) {
+        console.warn('⚠️ Unauthorized during refresh - user may need to re-authenticate');
+        // Don't set error state for auth issues to prevent infinite loops
+        // Keep existing jobs data
+      } else {
+        dispatch({ type: 'SET_ERROR', payload: error.message });
+      }
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
@@ -246,7 +320,17 @@ export const JobProvider = ({ children }) => {
     getJobsByStatus,
     getStats,
     hasStats,
-    refreshJobs
+    refreshJobs,
+    resetContext: () => {
+      console.log('🔍 Resetting JobContext...');
+      setIsInitialFetchComplete(false);
+      setRetryCount(0);
+      setIsFetching(false);
+      dispatch({ type: 'SET_JOBS', payload: [] });
+      dispatch({ type: 'SET_STATS', payload: null });
+      dispatch({ type: 'SET_ERROR', payload: null });
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
   };
 
   return (

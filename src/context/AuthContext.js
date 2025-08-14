@@ -59,19 +59,41 @@ export const AuthProvider = ({ children }) => {
 
   // Check if user is already authenticated on app load
   useEffect(() => {
+    console.log('🔍 AuthContext useEffect triggered');
     const checkAuth = async () => {
       try {
         const token = authService.getToken();
         const user = authService.getCurrentUser();
         
+        console.log('🔍 Auth check - token exists:', !!token, 'user exists:', !!user);
+        
         if (token && user) {
-          // Verify token is still valid by getting profile
-          const profile = await authService.getProfile();
-          dispatch({
-            type: 'AUTH_SUCCESS',
-            payload: { user: profile.user, token }
-          });
+          // Only verify token if we have both token and user data
+          try {
+            console.log('🔍 Verifying token with profile API call...');
+            const profile = await authService.getProfile();
+            console.log('🔍 Profile verification successful');
+            dispatch({
+              type: 'AUTH_SUCCESS',
+              payload: { user: profile.user, token }
+            });
+          } catch (profileError) {
+            // If profile fetch fails with 401, token is likely expired
+            if (profileError.response?.status === 401) {
+              console.warn('⚠️ Token expired during auth check, clearing auth state');
+              authService.logout(); // Clear expired token
+              dispatch({ type: 'AUTH_FAILURE', payload: null });
+            } else {
+              // For other errors, still try to use stored user data
+              console.warn('⚠️ Profile fetch failed, using stored user data:', profileError.message);
+              dispatch({
+                type: 'AUTH_SUCCESS',
+                payload: { user, token }
+              });
+            }
+          }
         } else {
+          console.log('🔍 No token or user found, dispatching AUTH_FAILURE');
           dispatch({ type: 'AUTH_FAILURE', payload: null });
         }
       } catch (error) {

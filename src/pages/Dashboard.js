@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Briefcase, TrendingUp, Calendar, MapPin } from 'lucide-react';
 import { useJobs } from '../context/JobContext';
@@ -8,7 +8,9 @@ import { formatDistanceToNow } from 'date-fns';
 const Dashboard = () => {
   const { jobs, getStats, loading } = useJobs();
   const { user } = useAuth();
-  const stats = getStats();
+  
+  // Use useMemo to prevent unnecessary recalculations
+  const stats = useMemo(() => getStats(), [getStats]);
 
   // Helper function to safely format dates
   const safeFormatDate = (dateValue, options = { addSuffix: true }) => {
