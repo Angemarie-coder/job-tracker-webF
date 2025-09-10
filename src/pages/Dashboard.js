@@ -48,7 +48,12 @@ const Dashboard = () => {
   const getStatusColor = (status) => {
     const colors = {
       applied: 'bg-blue-100 text-blue-800',
+      'in progress': 'bg-purple-100 text-purple-800',
       interviewing: 'bg-yellow-100 text-yellow-800',
+      interviewed: 'bg-orange-100 text-orange-800',
+      'waiting response': 'bg-indigo-100 text-indigo-800',
+      exam: 'bg-pink-100 text-pink-800',
+      examined: 'bg-teal-100 text-teal-800',
       offered: 'bg-green-100 text-green-800',
       rejected: 'bg-red-100 text-red-800',
       withdrawn: 'bg-gray-100 text-gray-800'
@@ -59,7 +64,12 @@ const Dashboard = () => {
   const getStatusIcon = (status) => {
     const icons = {
       applied: '📝',
+      'in progress': '⚡',
       interviewing: '🤝',
+      interviewed: '✅',
+      'waiting response': '⏳',
+      exam: '📝',
+      examined: '📊',
       offered: '🎉',
       rejected: '❌',
       withdrawn: '↩️'
@@ -87,7 +97,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div className="card">
           <div className="flex items-center">
             <div className="p-2 bg-primary-100 rounded-lg">
@@ -114,12 +124,72 @@ const Dashboard = () => {
 
         <div className="card">
           <div className="flex items-center">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <span className="text-2xl">⚡</span>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">In Progress</p>
+              <p className="text-2xl font-bold text-gray-900">{stats['in progress']}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
               <span className="text-2xl">🤝</span>
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Interviewing</p>
               <p className="text-2xl font-bold text-gray-900">{stats.interviewing}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="flex items-center">
+            <div className="p-2 bg-orange-100 rounded-lg">
+              <span className="text-2xl">✅</span>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Interviewed</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.interviewed}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="flex items-center">
+            <div className="p-2 bg-indigo-100 rounded-lg">
+              <span className="text-2xl">⏳</span>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Waiting Response</p>
+              <p className="text-2xl font-bold text-gray-900">{stats['waiting response']}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="flex items-center">
+            <div className="p-2 bg-pink-100 rounded-lg">
+              <span className="text-2xl">📝</span>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Exam</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.exam}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="flex items-center">
+            <div className="p-2 bg-teal-100 rounded-lg">
+              <span className="text-2xl">📊</span>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Examined</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.examined}</p>
             </div>
           </div>
         </div>

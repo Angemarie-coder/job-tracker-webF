@@ -13,6 +13,7 @@ const Navbar = () => {
     { path: '/', label: 'Dashboard', icon: Home },
     { path: '/jobs', label: 'Jobs', icon: Briefcase },
     { path: '/add-job', label: 'Add Job', icon: Plus },
+    ...(user?.role === 'admin' ? [{ path: '/admin', label: 'Admin', icon: User }] : []),
   ];
 
   return (

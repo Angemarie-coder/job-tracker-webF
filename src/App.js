@@ -7,6 +7,7 @@ import JobDetail from './pages/JobDetail';
 import AddJob from './pages/AddJob';
 import EditJob from './pages/EditJob';
 import Analytics from './pages/Analytics';
+import AdminDashboard from './pages/AdminDashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import RegistrationSuccess from './pages/RegistrationSuccess';
@@ -122,6 +123,11 @@ function AppRoutes() {
             <Route path="/analytics" element={
               <ProtectedRoute>
                 <Analytics />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminDashboard />
               </ProtectedRoute>
             } />
           </Routes>

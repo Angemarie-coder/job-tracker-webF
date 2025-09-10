@@ -236,7 +236,12 @@ export const JobProvider = ({ children }) => {
       return {
         total: 0,
         applied: 0,
+        'in progress': 0,
         interviewing: 0,
+        interviewed: 0,
+        'waiting response': 0,
+        exam: 0,
+        examined: 0,
         offered: 0,
         rejected: 0,
         withdrawn: 0
@@ -246,7 +251,12 @@ export const JobProvider = ({ children }) => {
     const calculatedStats = {
       total: state.jobs.length,
       applied: state.jobs.filter(job => job.status === 'applied').length,
+      'in progress': state.jobs.filter(job => job.status === 'in progress').length,
       interviewing: state.jobs.filter(job => job.status === 'interviewing').length,
+      interviewed: state.jobs.filter(job => job.status === 'interviewed').length,
+      'waiting response': state.jobs.filter(job => job.status === 'waiting response').length,
+      exam: state.jobs.filter(job => job.status === 'exam').length,
+      examined: state.jobs.filter(job => job.status === 'examined').length,
       offered: state.jobs.filter(job => job.status === 'offered').length,
       rejected: state.jobs.filter(job => job.status === 'rejected').length,
       withdrawn: state.jobs.filter(job => job.status === 'withdrawn').length

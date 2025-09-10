@@ -68,7 +68,12 @@ const JobList = () => {
   const getStatusColor = (status) => {
     const colors = {
       applied: 'bg-blue-100 text-blue-800',
+      'in progress': 'bg-purple-100 text-purple-800',
       interviewing: 'bg-yellow-100 text-yellow-800',
+      interviewed: 'bg-orange-100 text-orange-800',
+      'waiting response': 'bg-indigo-100 text-indigo-800',
+      exam: 'bg-pink-100 text-pink-800',
+      examined: 'bg-teal-100 text-teal-800',
       offered: 'bg-green-100 text-green-800',
       rejected: 'bg-red-100 text-red-800',
       withdrawn: 'bg-gray-100 text-gray-800'
@@ -79,7 +84,12 @@ const JobList = () => {
   const getStatusIcon = (status) => {
     const icons = {
       applied: '📝',
+      'in progress': '⚡',
       interviewing: '🤝',
+      interviewed: '✅',
+      'waiting response': '⏳',
+      exam: '📝',
+      examined: '📊',
       offered: '🎉',
       rejected: '❌',
       withdrawn: '↩️'
@@ -155,7 +165,12 @@ const JobList = () => {
             >
               <option value="all">All Statuses</option>
               <option value="applied">Applied</option>
+              <option value="in progress">In Progress</option>
               <option value="interviewing">Interviewing</option>
+              <option value="interviewed">Interviewed</option>
+              <option value="waiting response">Waiting Response</option>
+              <option value="exam">Exam</option>
+              <option value="examined">Examined</option>
               <option value="offered">Offered</option>
               <option value="rejected">Rejected</option>
               <option value="withdrawn">Withdrawn</option>

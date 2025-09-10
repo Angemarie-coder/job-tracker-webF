@@ -146,7 +146,12 @@ const AddJob = () => {
                 className="input-field"
               >
                 <option value="applied">Applied</option>
+                <option value="in progress">In Progress</option>
                 <option value="interviewing">Interviewing</option>
+                <option value="interviewed">Interviewed</option>
+                <option value="waiting response">Waiting Response</option>
+                <option value="exam">Exam</option>
+                <option value="examined">Examined</option>
                 <option value="offered">Offered</option>
                 <option value="rejected">Rejected</option>
                 <option value="withdrawn">Withdrawn</option>
