@@ -48,7 +48,7 @@ const Analytics = () => {
       <div className="flex justify-center items-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading analytics...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading analytics...</p>
         </div>
       </div>
     );
@@ -60,9 +60,9 @@ const Analytics = () => {
       <div className="space-y-8">
         <div className="text-center py-12">
           <div className="text-gray-500 text-6xl mb-4">📊</div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No Analytics Data Available</h3>
-          <p className="text-gray-600 mb-4">Please add some jobs to see your analytics</p>
-          <p className="text-sm text-gray-500">The data will appear automatically once you have jobs in your tracker.</p>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No Analytics Data Available</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Please add some jobs to see your analytics</p>
+          <p className="text-sm text-gray-500 dark:text-gray-500">The data will appear automatically once you have jobs in your tracker.</p>
         </div>
       </div>
     );
@@ -72,8 +72,8 @@ const Analytics = () => {
     return (
       <div className="text-center py-12">
         <div className="text-red-500 text-6xl mb-4">⚠️</div>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading analytics</h3>
-        <p className="text-gray-600 mb-4">{error}</p>
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Error loading analytics</h3>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
         <button 
           onClick={() => window.location.reload()} 
           className="btn-primary"
@@ -88,13 +88,13 @@ const Analytics = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Job Search Analytics</h1>
-        <p className="text-gray-600">Track your progress and gain insights into your job search</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Job Search Analytics</h1>
+        <p className="text-gray-600 dark:text-gray-400">Track your progress and gain insights into your job search</p>
       </div>
 
       {/* Navigation Tabs */}
       <div className="flex justify-center">
-        <nav className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        <nav className="flex space-x-1 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
           {[
             { id: 'overview', label: 'Overview', icon: TrendingUp },
             { id: 'timeline', label: 'Timeline', icon: Calendar },

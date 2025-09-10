@@ -16,6 +16,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { JobProvider } from './context/JobContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -61,7 +62,7 @@ function AppRoutes() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 overflow-x-hidden">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden transition-colors duration-200">
         <Navbar />
         <main className="container mx-auto px-4 py-8 overflow-x-hidden smooth-scroll">
           <Routes>
@@ -139,11 +140,13 @@ function AppRoutes() {
 
 function App() {
   return (
-    <AuthProvider>
-      <JobProvider>
-        <AppRoutes />
-      </JobProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <JobProvider>
+          <AppRoutes />
+        </JobProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

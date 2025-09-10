@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Briefcase, Plus, Home, User, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const location = useLocation();
@@ -17,12 +18,12 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
+    <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-200">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
             <Briefcase className="h-8 w-8 text-primary-600" />
-            <span className="text-xl font-bold text-gray-900">Job Tracker</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">Job Tracker</span>
           </Link>
           
           {isAuthenticated ? (
@@ -38,8 +39,8 @@ const Navbar = () => {
                       to={item.path}
                       className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                         isActive
-                          ? 'bg-primary-100 text-primary-700'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                          ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300'
+                          : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                     >
                       <Icon className="h-5 w-5" />
@@ -51,7 +52,8 @@ const Navbar = () => {
 
               {/* User menu */}
               <div className="hidden md:flex items-center space-x-4">
-                <div className="flex items-center space-x-2 text-sm text-gray-700">
+                <ThemeToggle />
+                <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
                   <User className="h-4 w-4" />
                   <span>{user?.firstName || 'User'}</span>
                 </div>
@@ -60,7 +62,7 @@ const Navbar = () => {
                     logout();
                     navigate('/login');
                   }}
-                  className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
@@ -68,10 +70,11 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            <div className="hidden md:flex space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
+              <ThemeToggle />
               <Link
                 to="/login"
-                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg transition-colors duration-200"
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-lg transition-colors duration-200"
               >
                 Sign In
               </Link>
@@ -85,10 +88,11 @@ const Navbar = () => {
           )}
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -101,7 +105,7 @@ const Navbar = () => {
         
         {/* Mobile menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200">
+          <div className="md:hidden border-t border-gray-200 dark:border-gray-700">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {isAuthenticated ? (
                 <>
@@ -116,8 +120,8 @@ const Navbar = () => {
                         onClick={() => setIsMobileMenuOpen(false)}
                         className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                           isActive
-                            ? 'bg-primary-100 text-primary-700'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                            ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300'
+                            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >
                         <Icon className="h-5 w-5" />
@@ -126,8 +130,8 @@ const Navbar = () => {
                     );
                   })}
                   
-                  <div className="border-t border-gray-200 pt-2 mt-2">
-                    <div className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700">
+                  <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+                    <div className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300">
                       <User className="h-4 w-4" />
                       <span>{user?.firstName || 'User'}</span>
                     </div>
@@ -137,7 +141,7 @@ const Navbar = () => {
                         navigate('/login');
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-200 w-full"
+                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 w-full"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
@@ -149,14 +153,14 @@ const Navbar = () => {
                   <Link
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                    className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors duration-200"
+                    className="block px-3 py-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900 rounded-lg transition-colors duration-200"
                   >
                     Sign Up
                   </Link>

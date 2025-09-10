@@ -42,18 +42,18 @@ const JobDetail = () => {
 
   const getStatusColor = (status) => {
     const colors = {
-      applied: 'bg-blue-100 text-blue-800',
-      'in progress': 'bg-purple-100 text-purple-800',
-      interviewing: 'bg-yellow-100 text-yellow-800',
-      interviewed: 'bg-orange-100 text-orange-800',
-      'waiting response': 'bg-indigo-100 text-indigo-800',
-      exam: 'bg-pink-100 text-pink-800',
-      examined: 'bg-teal-100 text-teal-800',
-      offered: 'bg-green-100 text-green-800',
-      rejected: 'bg-red-100 text-red-800',
-      withdrawn: 'bg-gray-100 text-gray-800'
+      applied: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+      'in progress': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+      interviewing: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+      interviewed: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+      'waiting response': 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+      exam: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+      examined: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200',
+      offered: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+      rejected: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+      withdrawn: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
     };
-    return colors[status] || 'bg-gray-100 text-gray-800';
+    return colors[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
   };
 
   const getStatusIcon = (status) => {
@@ -88,7 +88,7 @@ const JobDetail = () => {
       <div className="flex justify-center items-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading job details...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading job details...</p>
         </div>
       </div>
     );
@@ -97,8 +97,8 @@ const JobDetail = () => {
   if (!job) {
     return (
       <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Job Not Found</h2>
-        <p className="text-gray-600 mb-6">The job you're looking for doesn't exist or has been removed.</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Job Not Found</h2>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">The job you're looking for doesn't exist or has been removed.</p>
         <Link to="/jobs" className="btn-primary">
           Back to Jobs
         </Link>
@@ -111,12 +111,12 @@ const JobDetail = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Link to="/jobs" className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+          <Link to="/jobs" className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
             <ArrowLeft className="h-5 w-5" />
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{job.title}</h1>
-            <p className="text-gray-600 mt-2">{job.company}</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{job.title}</h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">{job.company}</p>
           </div>
         </div>
         

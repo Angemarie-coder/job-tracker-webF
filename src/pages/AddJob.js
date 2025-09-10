@@ -76,23 +76,23 @@ const AddJob = () => {
       <div className="flex items-center space-x-4 mb-8">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+          className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
         >
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Add New Job</h1>
-          <p className="text-gray-600 mt-2">Track a new job application</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Add New Job</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Track a new job application</p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="card">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Job Information</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Job Information</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Job Title *
               </label>
               <input
@@ -107,7 +107,7 @@ const AddJob = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Company *
               </label>
               <input
@@ -122,7 +122,7 @@ const AddJob = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Location
               </label>
               <input
@@ -136,7 +136,7 @@ const AddJob = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Status
               </label>
               <select
@@ -159,7 +159,7 @@ const AddJob = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Salary Range
               </label>
               <input
@@ -173,7 +173,7 @@ const AddJob = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Application Date *
               </label>
               <input

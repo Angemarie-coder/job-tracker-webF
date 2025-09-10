@@ -109,7 +109,7 @@ const JobList = () => {
       <div className="flex justify-center items-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading jobs...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading jobs...</p>
         </div>
       </div>
     );
@@ -131,8 +131,8 @@ const JobList = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">All Jobs</h1>
-          <p className="text-gray-600 mt-2">Manage your job applications</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">All Jobs</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Manage your job applications</p>
         </div>
         <Link
           to="/add-job"
@@ -147,7 +147,7 @@ const JobList = () => {
       <div className="card">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" />
             <input
               type="text"
               placeholder="Search jobs..."
@@ -190,7 +190,7 @@ const JobList = () => {
             </select>
           </div>
 
-          <div className="text-sm text-gray-600 flex items-center">
+          <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
             <Filter className="h-4 w-4 mr-2" />
             {filteredJobs.length} of {safeJobs.length} jobs
           </div>
@@ -201,10 +201,10 @@ const JobList = () => {
       {filteredJobs.length === 0 ? (
         <div className="card text-center py-12">
           <div className="text-6xl mb-4">📋</div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
             {safeJobs.length === 0 ? 'No jobs yet' : 'No jobs match your filters'}
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
             {safeJobs.length === 0 
               ? 'Start tracking your job applications' 
               : 'Try adjusting your search or filters'
@@ -228,13 +228,13 @@ const JobList = () => {
                   
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{job.title}</h3>
                       <span className={`status-badge ${getStatusColor(job.status)}`}>
                         {job.status}
                       </span>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-400">
                       <div className="flex items-center">
                         <MapPin className="h-4 w-4 mr-2" />
                         <span>{job.company}</span>
@@ -252,7 +252,7 @@ const JobList = () => {
                     </div>
                     
                     {job.salary && (
-                      <div className="flex items-center mt-2 text-sm text-gray-600">
+                      <div className="flex items-center mt-2 text-sm text-gray-600 dark:text-gray-400">
                         <DollarSign className="h-4 w-4 mr-2" />
                         <span>{job.salary}</span>
                       </div>
@@ -263,7 +263,7 @@ const JobList = () => {
                 <div className="flex items-center space-x-2">
                   <Link
                     to={`/jobs/${job._id}`}
-                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+                    className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
                     title="View Details"
                   >
                     <Eye className="h-5 w-5" />
@@ -271,7 +271,7 @@ const JobList = () => {
                   
                   <Link
                     to={`/jobs/${job._id}/edit`}
-                    className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg"
+                    className="p-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-lg"
                     title="Edit Job"
                   >
                     <Edit className="h-5 w-5" />
@@ -279,7 +279,7 @@ const JobList = () => {
                   
                   <button
                     onClick={() => handleDeleteJob(job._id)}
-                    className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg"
+                    className="p-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg"
                     title="Delete Job"
                   >
                     <Trash2 className="h-5 w-5" />
