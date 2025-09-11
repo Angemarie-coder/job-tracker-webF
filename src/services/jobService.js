@@ -3,7 +3,7 @@ import api from './api';
 export const jobService = {
   // Get all jobs with optional filtering, search, and pagination
   async getJobs(params = {}) {
-    const response = await api.get('/jobs', { params });
+    const response = await api.get('/jobs', { params: { limit: 100, ...params } });
     return response.data;
   },
 

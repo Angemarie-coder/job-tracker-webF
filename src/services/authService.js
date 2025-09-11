@@ -25,6 +25,18 @@ export const authService = {
     return response.data;
   },
 
+  // Verify email with token
+  async verifyEmail(token) {
+    const response = await api.get(`/auth/verify-email`, { params: { token } });
+    return response.data;
+  },
+
+  // Resend verification email
+  async resendVerification(email) {
+    const response = await api.post('/auth/resend-verification', { email });
+    return response.data;
+  },
+
   // Get current user profile
   async getProfile() {
     const response = await api.get('/auth/me');
