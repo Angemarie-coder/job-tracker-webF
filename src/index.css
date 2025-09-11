@@ -13,8 +13,29 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: #0f172a; /* slate-900 */
+    background-color: #ffffff;
   }
-  
+
+  .dark body {
+    color: #e5e7eb; /* gray-200 */
+    background-color: #111827; /* gray-900 */
+  }
+
+  /* Headings inherit color but ensure stronger contrast in dark */
+  h1, h2, h3, h4, h5, h6 {
+    color: inherit;
+  }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #ffffff; /* white */
+  }
+
+  /* Links */
+  a { color: #2563eb; }
+  .dark a { color: #60a5fa; }
+  a:hover { color: #1d4ed8; }
+  .dark a:hover { color: #93c5fd; }
+
   * {
     box-sizing: border-box;
   }
@@ -61,6 +82,12 @@
   .dark * {
     scrollbar-color: #6b7280 #374151;
   }
+
+  /* Tables: ensure readable text in dark */
+  table { color: inherit; }
+  thead th { color: #64748b; /* slate-500 */ }
+  .dark thead th { color: #d1d5db; /* gray-300 */ }
+  tbody td { color: inherit; }
 }
 
 @layer components {
@@ -69,23 +96,24 @@
     @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
   }
   
+  /* stylelint-disable-next-line at-rule-no-unknown */
   .btn-secondary {
-    /* stylelint-disable-next-line at-rule-no-unknown */
     @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200;
   }
   
+  /* stylelint-disable-next-line at-rule-no-unknown */
   .card {
-    /* stylelint-disable-next-line at-rule-no-unknown */
     @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 dark:bg-gray-800 dark:border-gray-700;
+    color: inherit;
   }
   
+  /* stylelint-disable-next-line at-rule-no-unknown */
   .input-field {
-    /* stylelint-disable-next-line at-rule-no-unknown */
     @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
   }
   
+  /* stylelint-disable-next-line at-rule-no-unknown */
   .status-badge {
-    /* stylelint-disable-next-line at-rule-no-unknown */
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
   
@@ -101,8 +129,8 @@
       -webkit-overflow-scrolling: touch;
     }
     
+    /* stylelint-disable-next-line at-rule-no-unknown */
     .card {
-      /* stylelint-disable-next-line at-rule-no-unknown */
       @apply bg-white rounded-xl shadow-sm border border-gray-200 p-4;
     }
   }

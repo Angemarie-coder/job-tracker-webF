@@ -14,6 +14,7 @@ import RegistrationSuccess from './pages/RegistrationSuccess';
 import EmailVerification from './pages/EmailVerification';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { JobProvider } from './context/JobContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -129,6 +130,11 @@ function AppRoutes() {
             <Route path="/admin" element={
               <ProtectedRoute>
                 <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
           </Routes>

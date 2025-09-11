@@ -15,6 +15,7 @@ const Navbar = () => {
     { path: '/jobs', label: 'Jobs', icon: Briefcase },
     { path: '/add-job', label: 'Add Job', icon: Plus },
     ...(user?.role === 'admin' ? [{ path: '/admin', label: 'Admin', icon: User }] : []),
+    { path: '/profile', label: 'Profile', icon: User },
   ];
 
   return (
@@ -53,10 +54,10 @@ const Navbar = () => {
               {/* User menu */}
               <div className="hidden md:flex items-center space-x-4">
                 <ThemeToggle />
-                <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                <Link to="/profile" className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-lg transition-colors duration-200">
                   <User className="h-4 w-4" />
                   <span>{user?.firstName || 'User'}</span>
-                </div>
+                </Link>
                 <button
                   onClick={() => {
                     logout();
@@ -131,10 +132,14 @@ const Navbar = () => {
                   })}
                   
                   <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
-                    <div className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300">
+                    <Link
+                      to="/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                    >
                       <User className="h-4 w-4" />
                       <span>{user?.firstName || 'User'}</span>
-                    </div>
+                    </Link>
                     <button
                       onClick={() => {
                         logout();

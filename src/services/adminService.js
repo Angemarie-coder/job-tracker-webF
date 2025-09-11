@@ -7,6 +7,12 @@ export const adminService = {
     return response.data;
   },
 
+  // Get admin jobs with user info
+  getAdminJobs: async (params = {}) => {
+    const response = await api.get('/admin/jobs', { params });
+    return response.data;
+  },
+
   // Get single user
   getUser: async (userId) => {
     const response = await api.get(`/admin/users/${userId}`);
