@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, UserCheck, UserX, Briefcase, Search, Edit, Trash2, Eye, LayoutGrid } from 'lucide-react';
+import { Users, UserCheck, Briefcase, Search, Edit, Trash2, LayoutGrid } from 'lucide-react';
 import { adminService } from '../services/adminService';
 
 const AdminDashboard = () => {
